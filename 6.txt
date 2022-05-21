@@ -1,0 +1,22 @@
+@startuml
+!theme bluegray
+skinparam sequenceMessageAlign center
+
+participant Browser
+participant Server
+
+Browser->Server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+note over Browser
+request body: {
+  "content":"hello",
+  "date":"2022-05-21T15:59:04.094Z"
+}
+end note
+
+Server-->Browser: 201 Created  
+note over Server
+response body: {
+  message: "note created"}
+end note
+
+@enduml

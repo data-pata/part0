@@ -1,0 +1,39 @@
+@startuml
+!theme bluegray
+skinparam sequenceMessageAlign center
+
+participant Browser
+participant Server
+
+note over Browser
+Browser POST:s form data when
+user submits it by clicking save.
+end note
+
+Browser->Server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note
+
+note over Server
+Server response status tells the Browser
+to redirect. The Location response header
+indicates the redirect resource.
+end note
+
+Server-->Browser: 302 Found, location: /exampleapp/notes  
+
+note over Browser
+The redirect URL is the same page we're
+on. That is: the same flow we've already,
+when accessing the page, is triggered: 
+end note
+
+Browser->Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
+Server-->Browser: notes
+Browser->Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+Server-->Browser: main.css
+Browser->Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
+Server-->Browser: main.js
+
+Browser->Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+Server-->Browser: [{ content: "HTML is easy", date: "2019-05-23" }, ...]
+
+@enduml
